@@ -1,8 +1,8 @@
 # adb-dotnet-mongoapi
-Demonstration of using MongoDB Compatible APIs to connect a .NET application to an OCI Autonomous JSON Database
+Demonstration using MongoDB Compatible APIs to connect a .NET application to an OCI Autonomous JSON Database
 
 ## Introduction
-Software development shops running .NET applications are used to native interaction with a document-oriented, NoSQL database.  Often times this is accomplished by connecting to CosmosDB in Azure.  From an Oracle perspective, the recommended mapping is to leverage Autonomous JSON Database (ADB-J).  However, the ADB-J APIs for native, NoSQL-style interaction with JSON documents are called SODA (Simple Oracle Document Access) and do not currently support .NET.
+Software development shops running .NET applications are accustomed to native interaction with a document-oriented, NoSQL database.  Often times this is accomplished by connecting to CosmosDB in Azure.  From an Oracle perspective, the recommended mapping is to leverage Autonomous JSON Database (ADB-J).  However, the ADB-J APIs for native, NoSQL-style interaction with JSON documents are called SODA (Simple Oracle Document Access) and do not currently support .NET.
 
 As an alternative, it is possible to use ADB-J's support for MongoDB APIs to achieve NoSQL interactions with ADB-J from a .NET application.  In addition, one of the benefits of Oracle's converged database strategy is that it is also possible to seamlessly query JSON and relational data together.  This repository aims to show simple examples of both of these concepts.
 
@@ -19,7 +19,7 @@ The program is run via a console app that is contained in *Program.cs*.  The dem
 
 To configure the demo you will need to copy the *appsettings.template.json* file to *appsettings.json* and update the *ConnectString* and *DBName*.  The *DBName* is simply your database username (i.e. admin) and the *ConnectString* needs to be updated with your username (i.e. admin) substituted in several places along with the password of that user.  Please note that if the password has any special characters they will need to be URI encoded (for example, "pass#word" would be written as "pass%23word").  You can verify the connection string in the OCI Console by navigating to your ADB instance, clicking the *Service Console* button and then selecting the *Development* menu item.  If you've configured your network ACLs correctly you will see the MongoDB API connect string shown and it should correspond to the template provided (minus the embedded password).
 
-You should examine the code in *Program.cs* to understand what the demo will do.  It essentially adds 5 vehicles to the DB as documents, queries them, performs updates, filters them by make, and removes one of them.  This demonstrates a standard CRUD scenario.  
+You should examine the code in *Program.cs* to understand what the demo will do.  It adds 5 vehicles to the DB as documents, queries them, performs updates, filters them by make, and removes one of them.  This demonstrates a standard CRUD scenario.  
 
 Run the demo by issuing a *dotnet run* command from your shell.  You may need to install the dependencies referenced in the *adb-dotnet-mongoapi.csproj* file using NuGet either via the command line or through a plugin in an IDE like VSCode.
 
@@ -31,12 +31,12 @@ Click the *Database Actions* button from your ADB's landing page in the OCI Cons
 Start by creating some sample relational data
 1. Copy the contents of the *sql/create-table-ddl.sql* script into the worksheet and execute.  You now have an empty car 'dealer' table
 1. Right click on the 'dealer' table in the Navigator panel on the left side of the screen (you may need to hit the refresh button next to the search bar if the table is not showing) and select *Data Loading -> Upload Data*
-1. Drag the *sql/dealer-data.csv* file into selector and verify that 10 rows of data appear in the preview.
+1. Drag the *sql/dealer-data.csv* file into the file upload selector and verify that 10 rows of data appear in the preview.
 1. Click *Next* and verify the mapping of rows to columns looks correct.  Click *Next* again and complete the import by clicking *Finish*
 
 You are now positioned to run a few queries to demonstrate the ability to manipulate JSON data from SQL and to mix JSON and relational data.  Paste the contents of *sql/demo-worksheet.sql* into the SQL worksheet and run each of the queries either individually (by highlighting the queries) or as a script by clicking the "Run Script" button.
 1. Query 1 shows the ability to surface data inside the JSON document as relational columns
-1. Query 2 shows the contents of the relational Dealer table you created in the previous step
+1. Query 2 shows the contents of the relational 'dealer' table you created in the previous step
 1. Query 3 shows the ability to perform relational operations on a combination of the JSON data and the relational table
 
 
