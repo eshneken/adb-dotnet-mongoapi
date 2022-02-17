@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: csharp-job
+spec:
+  template:
+    spec:
+      containers:
+      - image: iad.ocir.io/orasenatdpltintegration03/jph/adb-dotnet-mongoapi
+        name: csharp-job
+        envFrom:
+          - secretRef:
+              name: db-secret
+        resources: {}
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: ocirsecret

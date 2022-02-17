@@ -10,12 +10,12 @@ namespace adb_dotnet_mongoapi
         public static string ConnectString;
         public static MongoClient Client;
         public static string DBName;
-    
+
         static void Main(string[] args)
         {
             // build the mongo config
             Program.createConfig();
-            Client = new MongoClient(ConnectString);  
+            Client = new MongoClient(ConnectString);
 
             // clean the cars collection to make the demo idempotent
             Client.GetDatabase(DBName).DropCollection(nameof(Car).ToLower());
@@ -30,8 +30,8 @@ namespace adb_dotnet_mongoapi
             Car fordF150 = new Car {Make="Ford", Model="F150", Cylinders=6};
             Car nissanAltima = new Car {Make="Nissan", Model="Altima", Cylinders=4};
 
-            var m3id = carRepo.Create(mazda3); 
-            var hcrvid = carRepo.Create(hondaCrv); 
+            var m3id = carRepo.Create(mazda3);
+            var hcrvid = carRepo.Create(hondaCrv);
             var haccid = carRepo.Create(hondaAccord);
             var f150id = carRepo.Create(fordF150);
             var naltid = carRepo.Create(nissanAltima);
@@ -72,7 +72,8 @@ namespace adb_dotnet_mongoapi
             // connection settings
             var config = new ConfigurationBuilder()
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("appsettings.json").Build();
+                    .AddJsonFile("appsettings.json", optional: true)
+                    .AddEnvironmentVariables().Build();
             ConnectString = config.GetValue<string>("ConnectString");
             DBName = config.GetValue<string>("DBName");
         }
